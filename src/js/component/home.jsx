@@ -26,6 +26,17 @@ const Home = () => {
 			setCurrentColor(colorSelected)
 		}
 
+		const addNewColor = (newColor) => {
+			const isStyleColorAdded = colorList.filter(color => newColor.styleColor === color.styleColor)
+			const isNameColorAdded = colorList.filter(color => newColor.color === color.color)						
+			
+			if (isNameColorAdded.length > 0 || isStyleColorAdded.length > 0) {
+				alert("Este Color ya ha sido creado")
+				return
+			}
+			setColorList([...colorList, newColor])
+			
+		}
 	
 	return (
 		<div className="row container-fluid app-background">
@@ -34,11 +45,11 @@ const Home = () => {
 				<div className='forma'></div>
 				{
 					colorList.map(color => (
-						<Light key={color.color}color={color} currentColor={currentColor} onSelectColor={onSelectColor}/>
+						<Light key={color.styleColor}color={color} currentColor={currentColor} onSelectColor={onSelectColor}/>
 					))
 				}				
 			</div>
-			<LightMenuActions onSelectColor={onSelectColor} colorList={colorList} currentColor={currentColor}/>
+			<LightMenuActions onSelectColor={onSelectColor} colorList={colorList} addNewColor={addNewColor}/>
 		</div>
 	);
 };
